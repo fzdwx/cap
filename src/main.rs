@@ -15,7 +15,7 @@ fn main() {
 
     // 启动视频编码线程
     let encoder_handle = thread::spawn(move || {
-        let mut encoder = VideoEncoder::new("output.mp4", 1920, 1080, 30).unwrap();
+        let mut encoder = VideoEncoder::new("output.mp4", 1920, 1080, 7).unwrap();
         let mut frame_count = 0;
 
         while let Ok(frame) = frame_rx.recv() {
