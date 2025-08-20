@@ -4,4 +4,5 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+ffmpeg-next = "7.1.0"
 xcap = "0.6.2"
