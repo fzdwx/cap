@@ -1,15 +1,8 @@
 use std::{thread, time::Duration, sync::mpsc, time::Instant};
-use xcap::Monitor;
+use xcap::{Frame, Monitor};
 
 mod video_encoder;
 use video_encoder::VideoEncoder;
-
-// Frame 结构体定义（基于您提供的信息）
-pub struct Frame {
-    pub width: u32,
-    pub height: u32,
-    pub raw: Vec<u8>,
-}
 
 fn main() {
     let monitor = Monitor::from_point(100, 100).unwrap();
@@ -52,16 +45,8 @@ fn main() {
                 Ok(frame) => {
                     frame_count += 1;
                     println!("收到帧 {}: {}x{}", frame_count, frame.width, frame.height);
-
-                    // 将 xcap 的帧转换为我们的 Frame 结构
-                    let our_frame = Frame {
-                        width: frame.width,
-                        height: frame.height,
-                        raw: frame.raw,
-                    };
-
                     // 发送帧到编码器
-                    if frame_tx_clone.send(our_frame).is_err() {
+                    if frame_tx_clone.send(frame).is_err() {
                         println!("编码器已关闭，停止发送帧");
                         break;
                     }
